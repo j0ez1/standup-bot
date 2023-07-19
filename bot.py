@@ -1,4 +1,3 @@
-import telegram
 from telegram.ext import Updater, CallbackQueryHandler
 import logging
 from telegram.ext import CommandHandler
@@ -116,3 +115,4 @@ duration_handler = CommandHandler('duration', com_duration)
 dispatcher.add_handler(duration_handler)
 
 updater.start_polling()
+updater.idle()

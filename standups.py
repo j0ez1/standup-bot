@@ -73,10 +73,8 @@ def create_first_standup(team_db_id, context, chat_id, update):
     delta = datetime.timedelta(hours=int(time[0]), minutes=int(time[1]))
     for date in standup_dates:
         interval = datetime.timedelta(days=7 * standup_dates[date])
-        job = context.job_queue.run_repeating(standup_job,
-                                              interval=interval,
-                                              first=date + delta,
-                                              context=team_db_id)
+        secs_from_now = (date + delta).timestamp() - datetime.datetime.now().timestamp()
+        job = context.job_queue.run_repeating(standup_job, interval=interval, first=secs_from_now, context=team_db_id)
         send_questions_jobs.append(job)
 
         send_answers_date = date + duration
